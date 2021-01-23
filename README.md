@@ -1,2 +1,5 @@
-# jenkins-docker-ansible
-A continuous build/deploy solution that installs ansible via requirements.txt, to enable using requirements.txt to define all dependencies of your ansible project. This example runs ansible-playbook for a simple local via Docker in a Jenkins pipeline.
+# Jenkins Docker Ansible via requirements.txt
+A continuous build/deploy solution that installs ansible via `requirements.txt`. This example runs `ansible-playbook` for a simple "hello world" Ansible `main.yml` file.
+
+> Tip: It is nice to lock/set your project's ansible `version` via `requirements.txt`.
+
