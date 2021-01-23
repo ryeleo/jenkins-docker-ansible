@@ -1,8 +1,8 @@
 pipeline {
   agent { 
-    docker {
-      dockerfile true
-      label 'nts' // Needs to run on specific 'NTS' agent in my Jenkins environment.
+    dockerfile {
+      filename 'Dockerfile'
+      dir '.'
     }
   }
   stages {
