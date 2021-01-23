@@ -1,0 +1,9 @@
+ansible==2.9.13
+# Example of other dependencies your ansible project might have
+#qmespath
+#ncclient>=0.6.9
+#paramiko
+#cryptography
+#bcrypt
+#pynacl
+#netaddr
