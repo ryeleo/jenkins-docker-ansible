@@ -2,5 +2,7 @@
 - name: Just debugging playbook
 
   tasks:
-- debug:
+  
+- name: Hello world
+  debug:
     msg: "Hello, world!"
