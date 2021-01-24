@@ -13,9 +13,10 @@ pipeline {
     }
     stage('Run ansible in docker, eh?') {
       steps {
+        sh 'whoami'
         sh 'pwd'
         sh 'ls -al'
-        sh 'sleep 300'
+        sh 'ansible --version'
       }
     }
   }
