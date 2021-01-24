@@ -13,7 +13,10 @@ pipeline {
     }
     stage('Run ansible in docker, eh?') {
       steps {
-        sh 'ansible-playbook main.yml'
+        sh 'which ansible'
+        sh 'which ansible-playbook'
+        sh 'ls -al'
+        sh 'ansible-playbook'
       }
     }
   }
