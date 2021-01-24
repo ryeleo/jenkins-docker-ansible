@@ -13,10 +13,9 @@ pipeline {
     }
     stage('Run ansible in docker, eh?') {
       steps {
-        sh 'which ansible'
-        sh 'which ansible-playbook'
+        sh 'pwd'
         sh 'ls -al'
-        sh 'ansible-playbook'
+        sh 'sleep 300'
       }
     }
   }
