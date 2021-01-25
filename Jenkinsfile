@@ -3,6 +3,7 @@ pipeline {
     dockerfile {
       filename 'Dockerfile'
       dir '.'
+      args '-u 0:0'
     }
   }
   stages {
