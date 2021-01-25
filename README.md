@@ -4,6 +4,7 @@ A continuous build/deploy solution that installs ansible via `requirements.txt`.
 > Tip: It is nice to lock/set your project's ansible `version` via `requirements.txt`.
 
 The Jenkins console output of this solution copied below for reference: 
+
 ```
 20:57:07 Connecting to https://api.github.com with no credentials, anonymous access
 20:57:07 Jenkins-Imposed API Limiter: Current quota for Github API usage has 47 remaining (5 under budget). Next quota of 60 in 41 min
