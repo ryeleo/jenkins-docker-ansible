@@ -2,7 +2,7 @@ pipeline {
   agent { 
     dockerfile {
       filename 'Dockerfile'
-      dir '.'
+      args '--user 0:0' // ansible commands fail if not logged in as root:root
     }
   }
   stages {
@@ -13,10 +13,8 @@ pipeline {
     }
     stage('Run ansible in docker, eh?') {
       steps {
-        sh 'which ansible'
-        sh 'which ansible-playbook'
-        sh 'ls -al'
-        sh 'ansible-playbook'
+        sh 'ansible --version'
+        sh 'ansible-playbook main.yml'
       }
     }
   }

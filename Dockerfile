@@ -1,5 +1,4 @@
-FROM python:3
+FROM python:3.9
 
-# Just need to install dependencies
-copy requirements.txt /tmp/
-RUN pip install -r /tmp/requirements.txt
+COPY requirements.txt /tmp/
+RUN pip3 install -r /tmp/requirements.txt
