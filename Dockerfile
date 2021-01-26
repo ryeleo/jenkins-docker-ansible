@@ -1,6 +1,6 @@
+FROM python:3.9
 ARG UID
 ARG GID
-FROM python:3.9
 
 # Create the jenkins user with a home directory
 RUN groupadd --gid $GID jenkins && useradd --uid $UID --gid $GID --create-home jenkins
