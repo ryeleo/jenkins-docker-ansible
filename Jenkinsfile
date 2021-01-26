@@ -1,7 +1,6 @@
-userId = sh(script: "id -u", returnStdout: true).trim()
-groupId = sh(script: "id -g", returnStdout: true).trim()
-
 pipeline {
+  userId = sh(script: 'id -u', returnStdout: true).trim()
+  groupId = sh(script: 'id -g', returnStdout: true).trim()
   agent { 
     dockerfile {
       filename 'Dockerfile'
