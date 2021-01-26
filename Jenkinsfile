@@ -1,12 +1,11 @@
-userId = sh(script: "id -u ${USER}", returnStdout: true).trim()
-groupId = sh(script: "id -u ${USER}", returnStdout: true).trim()
+userId = sh(script: "id -u", returnStdout: true).trim()
+groupId = sh(script: "id -g", returnStdout: true).trim()
 
 pipeline {
   agent { 
     dockerfile {
       filename 'Dockerfile'
-      args '--build-arg UID=${userId} \
-            --build-arg GID=${groupId}' // Build docker  ready to be run by the jenkins user
+      args '--build-arg UID=${userId} --build-arg GID=${groupId}' // Build docker  ready to be run by the jenkins user
     }
   }
   stages {
