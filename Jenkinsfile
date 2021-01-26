@@ -5,7 +5,7 @@ pipeline {
   agent { 
     dockerfile {
       filename 'Dockerfile'
-      args '--build-arg UID=${userId}
+      args '--build-arg UID=${userId} \
             --build-arg GID=${groupId}' // Build docker  ready to be run by the jenkins user
     }
   }
