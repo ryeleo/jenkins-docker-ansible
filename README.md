@@ -15,15 +15,9 @@ This solution has turned out to be surprisingly complex -- this is because:
 So, to workaround each of these, our goal must be:
 1. Create a 'jenkins' user in our docker container that has the same userId and groupId as the 'jenkins' that is executing the pipeline.
 
-If we achieve our goal, then the docker container will behave as expected.
+If we achieve this goal, then the docker container will be able to (1) run ansible commands, and (2) write files to the 'jenkins workspace' where the scripts are running.
 
-As a result, the docker container must establish a non-root user. 
-
-Effectively, 
-the Dockerfile establishes a 'jenkins' user that 
-
-
-Meanwhile, I've discovered that docker and ansible don't play particularly nice together. Ansible expects to have access to many parts of the filesystem 
+## Console Output from a successful run
 
 The Jenkins console output of this solution copied below for reference: 
 

@@ -2,7 +2,7 @@ pipeline {
   agent { 
     dockerfile {
       filename 'Dockerfile'
-      args '--build-arg UID=${sh(script: 'id -u', returnStdout: true).trim()} --build-arg GID=${sh(script: 'id -g', returnStdout: true).trim()}' // Build docker  ready to be run by the jenkins user
+      args '--build-arg UID=${sh(script: \'id -u\', returnStdout: true).trim()} --build-arg GID=${sh(script: \'id -g\', returnStdout: true).trim()}' // Build docker  ready to be run by the jenkins user
     }
   }
   stages {
