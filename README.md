@@ -9,13 +9,14 @@ A continuous build/deploy solution that installs ansible via `requirements.txt`.
 This solution has turned out to be surprisingly complex -- this is because: 
 
 1. When ansible runs inside of the docker container, it requires access to some different parts of the filesystem. E.g., it expects a home directory to exist for the user running ansible commands.
-2. We don't want to run 'as root' inside of the container.
-3. Some parts of the filesystem are shared between the Jenkins workspace and the docker container (via Docker 'bind volumes'). 
+2. Some parts of the filesystem are shared between the Jenkins workspace and the docker container (via Docker 'bind volumes'). 
+3. We don't want to run 'as root' inside of the container. In particular, this will cause issues if we create any files in the Jenkins workspace -- thos files will be owned by 'user 0' (aka root) even outside of the container. This is a major issue since the 'jenkins' user that is running Jenkins will not be able to delete files owned by user '0' -- jenkins will not be able to cleanup its own jenkins workspaces!
 
-So, to workaround each of these, our goal must be:
-1. Create a 'jenkins' user in our docker container that has the same userId and groupId as the 'jenkins' that is executing the pipeline.
+So, our solution that works around all of these issues:
+1. Create a 'jenkins' user in our docker container that has the same userId and groupId as the 'jenkins' user that is executing the pipeline.
+2. Create a home directory inside the container for that user.
 
-If we achieve this goal, then the docker container will be able to (1) run ansible commands, and (2) write files to the 'jenkins workspace' where the scripts are running.
+This solution results in a docker container will be able to (1) run ansible commands, and (2) write files to the 'jenkins workspace' where the scripts are running.
 
 ## Console Output from a successful run
 

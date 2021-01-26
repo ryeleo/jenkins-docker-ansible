@@ -1,8 +1,16 @@
+def user_id
+def group_id
+node {
+  { label 'nts' }
+  user_id = sh(returnStdout: true, script: 'id -u').trim()
+  group_id = sh(returnStdout: true, script: 'id -g').trim()
+}
+
 pipeline {
   agent { 
     dockerfile {
       filename 'Dockerfile'
-      additionalBuildArgs '--build-arg UID=${sh(script: \'id -u\', returnStdout: true).trim()} --build-arg GID=${sh(script: \'id -g\', returnStdout: true).trim()}'
+      additionalBuildArgs '--build-arg UID=${user_id} --build-arg GID=${group_id}'
     }
   }
   stages {
