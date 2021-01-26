@@ -1,8 +1,12 @@
+userId = sh(script: "id -u ${USER}", returnStdout: true).trim()
+groupId = sh(script: "id -u ${USER}", returnStdout: true).trim()
+
 pipeline {
   agent { 
     dockerfile {
       filename 'Dockerfile'
-      args '--user 0:0' // ansible commands fail if not logged in as root:root
+      args '--build-arg UID=${userId}
+            --build-arg GID=${groupId}' // Build docker  ready to be run by the jenkins user
     }
   }
   stages {
