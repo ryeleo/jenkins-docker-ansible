@@ -10,7 +10,7 @@ pipeline {
   agent { 
     dockerfile {
       filename 'Dockerfile'
-      additionalBuildArgs '--build-arg UID=${user_id} --build-arg GID=${group_id}'
+      additionalBuildArgs "--build-arg UID=${user_id} --build-arg GID=${group_id}"
     }
   }
   stages {
