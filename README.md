@@ -1,13 +1,22 @@
 # Jenkins Docker Ansible via requirements.txt
 
-A continuous build/deploy solution that installs ansible via `requirements.txt`. This example runs `ansible-playbook` for a simple "hello world" Ansible `main.yml` file.
+A continuous build/deploy solution that installs ansible in a docker container via `requirements.txt`. This example runs `ansible-playbook` for a simple "hello world" Ansible `main.yml` file.
 
 > Tip: It is nice to lock/set your project's ansible `version` via `requirements.txt`.
 
-## What's with the 'groupId' and 'userId' in the Jenkinsfile/Dockerfile?
+## WARNING
+
+NOT RECOMMENDED: After some playing around with this solution, I recognize that this solution does not actually offer good 'seperation of responsability', unfortunately. My Dockerfile needs be aware of the GID and UID of the running Jenkins agent (see below discussion). There might be a solution that allows us to dynamically determine these UID and GID in the Jenkinsfile and pass it as a `--build-arg` -- with that solution I have propogated a strange detail (the jenkins user's details) through my whole CI/CD solution.
+
+CI/CD should be concerned with _integration and deployment_ and should not be concerned with _jenkins server details_. 
+
+> RECOMMENDATION: For running Ansible workflows in Jenkins, I recommend directly managing the Python version on your Jenkins Agent, and use python virtual environments for installing dependencies.
+
+### What's with the 'groupId' and 'userId' in the Jenkinsfile/Dockerfile?
 
 This solution has turned out to be surprisingly complex -- this is because: 
 
+0. Docker and the Jenkins host shared single pool of uids and gids, which is described in ["Understanding how uid and gid work in Docker containers" (external article)](https://medium.com/@mccode/understanding-how-uid-and-gid-work-in-docker-containers-c37a01d01cf).
 1. When ansible runs inside of the docker container, it requires access to some different parts of the filesystem. E.g., it expects a home directory to exist for the user running ansible commands.
 2. Some parts of the filesystem are shared between the Jenkins workspace and the docker container (via Docker 'bind volumes'). 
 3. We don't want to run 'as root' inside of the container. In particular, this will cause issues if we create any files in the Jenkins workspace -- thos files will be owned by 'user 0' (aka root) even outside of the container. This is a major issue since the 'jenkins' user that is running Jenkins will not be able to delete files owned by user '0' -- jenkins will not be able to cleanup its own jenkins workspaces!
