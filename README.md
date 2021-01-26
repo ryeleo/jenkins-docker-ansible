@@ -1,7 +1,29 @@
 # Jenkins Docker Ansible via requirements.txt
+
 A continuous build/deploy solution that installs ansible via `requirements.txt`. This example runs `ansible-playbook` for a simple "hello world" Ansible `main.yml` file.
 
 > Tip: It is nice to lock/set your project's ansible `version` via `requirements.txt`.
+
+## What's with the 'groupId' and 'userId' in the Jenkinsfile/Dockerfile?
+
+This solution has turned out to be surprisingly complex -- this is because: 
+
+1. When ansible runs inside of the docker container, it requires access to some different parts of the filesystem. E.g., it expects a home directory to exist for the user running ansible commands.
+2. We don't want to run 'as root' inside of the container.
+3. Some parts of the filesystem are shared between the Jenkins workspace and the docker container (via Docker 'bind volumes'). 
+
+So, to workaround each of these, our goal must be:
+1. Create a 'jenkins' user in our docker container that has the same userId and groupId as the 'jenkins' that is executing the pipeline.
+
+If we achieve our goal, then the docker container will behave as expected.
+
+As a result, the docker container must establish a non-root user. 
+
+Effectively, 
+the Dockerfile establishes a 'jenkins' user that 
+
+
+Meanwhile, I've discovered that docker and ansible don't play particularly nice together. Ansible expects to have access to many parts of the filesystem 
 
 The Jenkins console output of this solution copied below for reference: 
 
