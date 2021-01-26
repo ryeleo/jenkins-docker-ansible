@@ -1,7 +1,7 @@
 def user_id
 def group_id
 node {
-  { label 'nts' }
+  label 'nts'
   user_id = sh(returnStdout: true, script: 'id -u').trim()
   group_id = sh(returnStdout: true, script: 'id -g').trim()
 }
